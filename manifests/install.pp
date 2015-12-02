@@ -65,4 +65,9 @@ class kvmcluster::install {
         "wget" ]:
         ensure  =>  installed,
     }
+
+    package { "NetworkManager": 
+        ensure =>   purged,
+        before =>   Class["::network::bond::static"],
+    }
 }
