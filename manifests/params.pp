@@ -1,5 +1,5 @@
 class kvmcluster::params { 
-    $name_prefix    = 'lit-'
+    $name_prefix    = 'lit'
 
     $node_hostname  = "$name_prefix-${::hostname}"
     $node_number    = 0
