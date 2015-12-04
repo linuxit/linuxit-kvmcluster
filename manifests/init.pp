@@ -4,11 +4,20 @@
 #
 # === Parameters
 #
-# Document parameters here.
+# [*name_prefix*]
+#   Node hostname prefix
+# 
+# [*node_number*]
+#   Node number in cluster (should be 1 / 2)
+# 
+# [*network_bonds*]
+#   Bond configuration as per razorsedge-network ::network::bond::static
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
+# [*network_slaves*]
+#   Interface configuration as per razorsedge-network ::network::bond::slave
+#
+# [*network_names*]
+#   Override bcn, sn, ifn network naming for this host
 #
 class kvmcluster (
     $name_prefix        = $kvmcluster::params::name_prefix,
@@ -17,6 +26,7 @@ class kvmcluster (
     $network_slaves     = {},
     $network_names      = $kvmcluster::params::network_names,
 ) {
+    # TODO: Validate parameters!
 
     anchor { '::begin': }->
     class { '::kvmcluster::configure': }->
