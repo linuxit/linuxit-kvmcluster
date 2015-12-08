@@ -1,8 +1,8 @@
 class kvmcluster::configure::network (
-    $bond       =   $::kvmcluster::network_bond,
-    $bond_bridge =  $::kvmcluster::network_bond_bridge,
-    $bridge     =   $::kvmcluster::network_bridge,
-    $slave      =   $::kvmcluster::network_slave,
+    $bond       =   $::kvmcluster::node_network[$::kvmcluster::node_number]['network_bond'],
+    $bond_bridge =  $::kvmcluster::node_network[$::kvmcluster::node_number]['network_bond_bridge'],
+    $bridge     =   $::kvmcluster::node_network[$::kvmcluster::node_number]['network_bridge'],
+    $slave      =   $::kvmcluster::node_network[$::kvmcluster::node_number]['network_slave'],
 ) { 
 #    file { "/etc/udev/rules.d/70-persistent-net.rules": 
 #        ensure  =>  present,

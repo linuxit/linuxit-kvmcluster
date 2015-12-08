@@ -3,7 +3,7 @@ class kvmcluster::configure::firewall (
     $sn_net     =   $::kvmcluster::sn_network,
     $ifn_net    =   $::kvmcluster::ifn_network,
 ) { 
-    $bonds      =   $::kvmcluster::network_bonds
+    $bonds      =   $::kvmcluster::node_network[$::kvmcluster::node_number]['network_bonds']
 
     resources { "firewall":
         purge => true

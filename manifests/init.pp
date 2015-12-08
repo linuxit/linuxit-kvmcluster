@@ -10,21 +10,8 @@
 # [*node_number*]
 #   Node number in cluster (should be 1 / 2)
 # 
-# [*network_bond*]
-#   Bond configuration as per razorsedge-network ::network::bond::static
-#   (TODO: Use forked version - pull request to add bridge param)
-#
-# [*network_bond_bridge*] 
-#   Bridge in front of bond configuration
-#
-# [*network_bridge*]
-#   Bridge configuration as per razorsedge-network ::network::bridge::static 
-#
-# [*network_slave*]
-#   Interface configuration as per razorsedge-network ::network::bond::slave
-#
-# [*network_name*]
-#   Override bcn, sn, ifn network naming for this host
+# [*node_network*]
+#   Each nodes network configuration
 #
 # [*ifn_network*]
 #   Network segment address - internet facing
@@ -38,12 +25,9 @@
 #
 class kvmcluster (
     $name_prefix        = $kvmcluster::params::name_prefix,
+    $node_hostname      = $kvmcluster::params::node_hostname,
     $node_number        = $kvmcluster::params::node_number,
-    $network_bond       = {},
-    $network_bond_bridge = {},
-    $network_bridge     = {},
-    $network_slave      = {},
-    $network_name       = $kvmcluster::params::network_name,
+    $node_network       = $kvmcluster::params::node_network,
     $ifn_network        = "",
     $sn_network         = "",
     $bcn_network        = "",
