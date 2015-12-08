@@ -1,11 +1,9 @@
 class kvmcluster::service { 
     service { [
-        "network",
         "ntpd", 
         "ricci",
         "modclusterd",
-        "ipmi",
-        "iptables",
+        #    "ipmi",
     ]: 
         ensure =>   running,
     }

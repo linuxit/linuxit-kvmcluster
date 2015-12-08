@@ -4,7 +4,7 @@ class kvmcluster::params {
     $node_hostname  = "$name_prefix-${::hostname}"
     $node_number    = 0
 
-    $network_names  = {
+    $network_name   = {
         bcn => "${node_hostname}${node_number}.bcn",
         sn  => "${node_hostname}${node_number}.sn",
         ifn => "${node_hostname}${node_number}.ifn",

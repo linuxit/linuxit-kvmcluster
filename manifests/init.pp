@@ -10,27 +10,49 @@
 # [*node_number*]
 #   Node number in cluster (should be 1 / 2)
 # 
-# [*network_bonds*]
+# [*network_bond*]
 #   Bond configuration as per razorsedge-network ::network::bond::static
+#   (TODO: Use forked version - pull request to add bridge param)
 #
-# [*network_slaves*]
+# [*network_bond_bridge*] 
+#   Bridge in front of bond configuration
+#
+# [*network_bridge*]
+#   Bridge configuration as per razorsedge-network ::network::bridge::static 
+#
+# [*network_slave*]
 #   Interface configuration as per razorsedge-network ::network::bond::slave
 #
-# [*network_names*]
+# [*network_name*]
 #   Override bcn, sn, ifn network naming for this host
+#
+# [*ifn_network*]
+#   Network segment address - internet facing
+#
+# [*sn_network*]
+#   Network segment address - storage
+#
+# [*bcn_network*]
+#   Network segment address - back channel
+#
 #
 class kvmcluster (
     $name_prefix        = $kvmcluster::params::name_prefix,
     $node_number        = $kvmcluster::params::node_number,
-    $network_bonds      = {},
-    $network_slaves     = {},
-    $network_names      = $kvmcluster::params::network_names,
-) {
+    $network_bond       = {},
+    $network_bond_bridge = {},
+    $network_bridge     = {},
+    $network_slave      = {},
+    $network_name       = $kvmcluster::params::network_name,
+    $ifn_network        = "",
+    $sn_network         = "",
+    $bcn_network        = "",
+) inherits kvmcluster::params {
     # TODO: Validate parameters!
 
-    anchor { '::begin': }->
+    anchor { '::kvmcluster::begin': }->
     class { '::kvmcluster::configure': }->
     class { '::kvmcluster::install': }->
     class { '::kvmcluster::service': }->
-    anchor { '::end': }
+    anchor {'::kvmcluster::end': }
 }

@@ -1,11 +1,10 @@
 class kvmcluster::configure::firewall (
-    bcn_network =>  $::kvmcluster::bcn_network,
-    bcn_ip      =>  $::kvmcluster::bcn_ip,
-    sn_network  =>  $::kvmcluster::sn_network,
-    sn_ip       =>  $::kvmcluster::sn_ip,
-    ifn_network =>  $::kvmcluster::ifn_network,
-    ifn_ip      =>  $::kvmcluster::ifn_ip,
+    $bcn_net    =   $::kvmcluster::bcn_network,
+    $sn_net     =   $::kvmcluster::sn_network,
+    $ifn_net    =   $::kvmcluster::ifn_network,
 ) { 
+    $bonds      =   $::kvmcluster::network_bonds
+
     resources { "firewall":
         purge => true
     }
@@ -15,12 +14,12 @@ class kvmcluster::configure::firewall (
         require => Class['::kvmcluster::configure::firewall::pre'],
     }
   
-    class { ['::site::profiles::firewall::pre', '::site::profiles::firewall::post']: }
+    class { ['::kvmcluster::configure::firewall::pre', '::kvmcluster::configure::firewall::post']: }
 
     class { '::firewall': }
 
     firewall { '100 corosync': 
-        ctstate     =>  new,
+        ctstate     =>  NEW,
         proto       =>  udp,
         source      =>  $bcn_net,
         destination =>  $bcn_net,
@@ -29,7 +28,7 @@ class kvmcluster::configure::firewall (
     }
 
     firewall { '101 multicast': 
-        ctstate  =>  new,
+        ctstate  =>  NEW,
         dst_type => 'MULTICAST',
         source   => $bcn_net,
         dport    => [ 5404, 5405 ],
@@ -37,7 +36,7 @@ class kvmcluster::configure::firewall (
     }
 
     firewall { '102 dlm': 
-        ctstate     =>  new,
+        ctstate     =>  NEW,
         source      =>  $bcn_net,
         destination =>  $bcn_net,
         dport       =>  21064,
@@ -45,7 +44,7 @@ class kvmcluster::configure::firewall (
     }
 
     firewall { '103 ricci': 
-        ctstate     =>  new,
+        ctstate     =>  NEW,
         source      =>  $bcn_net,
         destination =>  $bcn_net,
         dport       =>  11111,
@@ -53,21 +52,21 @@ class kvmcluster::configure::firewall (
     }
 
     firewall { '104 modclusterd': 
-        ctstate     =>  new,
+        ctstate     =>  NEW,
         source      =>  $bcn_net,
         destination =>  $bcn_net,
         dport       =>  16851,
         action =>   'accept',
     }
 
-    firewall { 'igmp': 
+    firewall { '199 igmp': 
         proto  =>   'igmp',
         action =>   'accept',
     }
 
     # TODO: Should be dynamic for the number of DRBD resources being sync'd
     firewall { '105 drbd': 
-        ctstate     =>  new,
+        ctstate     =>  NEW,
         source      =>  $sn_net,
         destination =>  $sn_net,
         dport       =>  [ 7788, 7789 ],
@@ -75,7 +74,7 @@ class kvmcluster::configure::firewall (
     }
     
     firewall { '106 KVM live migration': 
-        ctstate     =>  new,
+        ctstate     =>  NEW,
         source      =>  $bcn_net,
         destination =>  $bcn_net,
         dport       =>  "49152-49216",

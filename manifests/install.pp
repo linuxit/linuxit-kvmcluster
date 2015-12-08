@@ -1,7 +1,6 @@
 class kvmcluster::install { 
     package { [
 	    "acpid",
-        "bridge-utils",
         "ccs",
         "cman",
         "compat-libstdc++-33.i686",
@@ -9,7 +8,7 @@ class kvmcluster::install {
         "cyrus-sasl",
         "cyrus-sasl-plain",
         "dmidecode",
-        "drbd83-utils",
+        #        "drbd83-utils",
         "expect",
         "fence-agents",
         "freeipmi",
@@ -23,7 +22,7 @@ class kvmcluster::install {
         "ipmitool",
         "kernel-headers",
         "kernel-devel",
-        "kmod-drbd83",
+        #   "kmod-drbd83",
         "libstdc++.i686",
         "libstdc++-devel.i686",
         "libvirt",
@@ -46,7 +45,7 @@ class kvmcluster::install {
         "perl-TermReadKey",
         "perl-Test-Simple",
         "perl-Time-HiRes",
-        "perl-Net-SSH2",
+        # "perl-Net-SSH2",
         "perl-XML-Simple",
         "perl-YAML",
         "policycoreutils-python",
@@ -56,7 +55,7 @@ class kvmcluster::install {
         "rgmanager",
         "ricci",
         "rsync",
-        "Scanner",
+        # "Scanner",
         "screen",
         "syslinux",
         "sysstat",
@@ -68,6 +67,5 @@ class kvmcluster::install {
 
     package { "NetworkManager": 
         ensure =>   purged,
-        before =>   Class["::network::bond::static"],
     }
 }
