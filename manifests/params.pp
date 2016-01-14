@@ -10,8 +10,9 @@ class kvmcluster::params {
             bcn                 => undef,        
             sn                  => undef,        
             ifn                 => undef,        
-            pdu                 => undef,        
-            ups                 => undef,        
+            # TODO: PDU / UPS usage
+            # pdu                 => undef,        
+            # ups                 => undef,        
             network_bond        => {},
             network_bond_bridge => {},
             network_bridge      => {},
@@ -22,8 +23,9 @@ class kvmcluster::params {
             bcn                 => undef,        
             sn                  => undef,        
             ifn                 => undef,        
-            pdu                 => undef,        
-            ups                 => undef,        
+            # TODO: PDU / UPS usage
+            # pdu                 => undef,        
+            # ups                 => undef,        
             network_bond        => {},
             network_bond_bridge => {},
             network_bridge      => {},

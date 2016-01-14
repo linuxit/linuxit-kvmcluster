@@ -3,7 +3,7 @@ class kvmcluster::service {
         "ntpd", 
         "ricci",
         "modclusterd",
-        #    "ipmi",
+        # TODO: Physical?   "ipmi",
     ]: 
         ensure =>   running,
     }
@@ -17,6 +17,6 @@ class kvmcluster::service {
         "cman",
         "rgmanager",
     ]: 
-        ensure =>   stopped,
+        ensure =>   disabled,
     }
 }

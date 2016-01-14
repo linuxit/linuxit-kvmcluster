@@ -9,6 +9,9 @@
 # 
 # [*node_number*]
 #   Node number in cluster (should be 1 / 2)
+#
+# [*node_hostname*]
+#   Node hostname 
 # 
 # [*node_network*]
 #   Each nodes network configuration
