@@ -20,7 +20,7 @@ class kvmcluster::configure::ssh (
         ensure  =>  present,
         owner   =>  "root",
         group   =>  "root",
-        content =>  template("ssh-generation.sh.erb")
+        content =>  template("kvmcluster/ssh-generation.sh.erb")
     }->
     exec { $ssh_command:
         cwd     =>  "/tmp",
