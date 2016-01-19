@@ -17,7 +17,7 @@ if [ ! -f $SSHDIR/$PRIV ]; then
 fi
 
 if [ "$1" == "--partner" ]; then 
-    if [ $( ping -q -c 1 "<%= partner %>" 2>&1 >/dev/null ) == 0 ]; then
+    if [ $( ping -q -c 1 "<%= @partner %>" 2>&1 >/dev/null ) == 0 ]; then
         HOSTS=`cat /etc/hosts | grep -v -e '^#' -e '::' -e 'localhost' | sed -r -e 's/^[0-9\.]+[[:space:]]+//' -e 's/[[:space:]]+/\n/g' | uniq | tr '\n' ' '`
 
         for HOST in $HOSTS; do 
