@@ -3,6 +3,7 @@ class kvmcluster::params {
 
     $node_hostname  = "$name_prefix-${::hostname}"
     $node_number    = 0
+    $partner_alive  = false
 
     $node_network   = {
         1                       => {

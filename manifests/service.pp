@@ -17,6 +17,6 @@ class kvmcluster::service {
         "cman",
         "rgmanager",
     ]: 
-        ensure =>   disabled,
+        ensure =>   stopped,
     }
 }

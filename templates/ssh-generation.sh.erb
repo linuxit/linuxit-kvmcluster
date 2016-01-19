@@ -1,0 +1,32 @@
+#!/bin/bash
+
+if [ $UID -ne 0 ]; then
+    print "This command is for root usage on KVM cluster builds..."
+    exit 1
+fi
+
+SSHDIR=/root/.ssh
+AUTH=${SSHDIR}/authorized_keys
+KNOWN=${SSHDIR}/known_hosts
+PRIV=${SSHDIR}/id_rsa
+PUB=${PRIV}.pub
+
+if [ ! -f $SSHDIR/$PRIV ]; then
+    ssh-keygen -t rsa -N "" -b 4096 -f $PRIV
+    FINGERPRINT=`ssh-keygen -lf $PRIV | cut -d' ' -f2`
+fi
+
+if [ "$1" == "--partner" ]; then 
+    if [ $( ping -q -c 1 "<%= partner %>" 2>&1 >/dev/null ) == 0 ]; then
+        HOSTS=`cat /etc/hosts | grep -v -e '^#' -e '::' -e 'localhost' | sed -r -e 's/^[0-9\.]+[[:space:]]+//' -e 's/[[:space:]]+/\n/g' | uniq | tr '\n' ' '`
+
+        for HOST in $HOSTS; do 
+            ssh-keyscan $HOST >>$KNOWN
+        done
+
+        cp $PUB $AUTH
+        ssh root@<%= partner %> "cat $PUB" >>$AUTH
+    else
+        echo "Cannot deal with other node at this time. Please rerun when the other node is alive!"
+    fi
+fi

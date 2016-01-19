@@ -1,7 +1,7 @@
 class kvmcluster::configure::host (
     $node       =   $::kvmcluster::node_number,
     $nodes      =   $::kvmcluster::node_network,
-    $base       =   $::kvmcluster::node_hostname,
+    $base       =   chop($::kvmcluster::node_hostname),
 ) { 
     $other = $node ? {
         1       =>    2,
@@ -15,7 +15,7 @@ class kvmcluster::configure::host (
                 ip           => $nodes[$node]["bcn"],
                 host_aliases => [
                     "$base$node.bcn",
-                    "$base$node${::domain}",
+                    "$base$node.${::domain}",
                 ],
             },
             "$base$node.ipmi"  => {
@@ -33,7 +33,7 @@ class kvmcluster::configure::host (
                 ip           => $nodes[$other]["bcn"],
                 host_aliases => [
                     "$base$other.bcn",
-                    "$base$other${::domain}",
+                    "$base$other.${::domain}",
                 ],
             },
             "$base$other.ipmi"  => {
@@ -45,6 +45,9 @@ class kvmcluster::configure::host (
             "$base$other.ifn" => {
                 ip           => $nodes[$other]["ifn"],
             },
+            
+            # TODO: Switch configurations
+            
         }
         # TODO: Still to do: UPS and PDU
     }
