@@ -16,6 +16,9 @@
 # [*node_network*]
 #   Each nodes network configuration
 #
+# [*partner_alive*]
+#   Is the partner node in the cluster alive - if deferring the setup, ensure false
+#
 # [*ifn_network*]
 #   Network segment address - internet facing
 #
@@ -31,6 +34,7 @@ class kvmcluster (
     $node_hostname      = $kvmcluster::params::node_hostname,
     $node_number        = $kvmcluster::params::node_number,
     $node_network       = $kvmcluster::params::node_network,
+    $partner_alive      = $kvmcluster::params::partner_alive,
     $ifn_network        = "",
     $sn_network         = "",
     $bcn_network        = "",
@@ -40,6 +44,7 @@ class kvmcluster (
     anchor { '::kvmcluster::begin': }->
     class { '::kvmcluster::configure': }->
     class { '::kvmcluster::install': }->
+    class { '::kvmcluster::cluster': }-> 
     class { '::kvmcluster::service': }->
     anchor {'::kvmcluster::end': }
 }

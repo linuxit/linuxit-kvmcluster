@@ -1,11 +1,13 @@
 class kvmcluster::configure::ssh (
     $node           =   $::kvmcluster::node_number,
+    $base           =   chop($::kvmcluster::node_hostname),
     $partner_alive  =   $::kvmcluster::partner_alive,
 ) { 
-    $partner = $node ? {
+    $num = $node ? {
         1       =>    2,
         2       =>    1,
     }
+    $partner = "${base}${num}"
 
     if $partner_alive {
         $args = " --partner"
@@ -20,6 +22,7 @@ class kvmcluster::configure::ssh (
         ensure  =>  present,
         owner   =>  "root",
         group   =>  "root",
+        mode    =>  "0750",
         content =>  template("kvmcluster/ssh-generation.sh.erb")
     }->
     exec { $ssh_command:
